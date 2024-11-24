@@ -1,5 +1,5 @@
 {
-  "name": "maplibre-getfeatureinfo",
+  "name": "maplibre-wms-getfeatureinfo",
   "version": "1.0.0",
   "description": "",
   "main": "getfeatureinfo.js",
