@@ -1,4 +1,5 @@
 # WMS getFeatureInfo for maplibre and mapbox
+WMS getfeatureInfo for use in maplibre and mapbox and other map viewers
 
 ## requirements
 nodejs (includes npm)
