@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GetFeatureInfo</title>
+  <script type="module">
+    import { queryWMSFeatures } from './getfeatureinfo.js';
+    async function buttonClick() {
+      const wmsUrl = "https://service.pdok.nl/rws/ahn/wms/v1_0?language=dut&"
+      const layer = "dsm_05m";
+      const domToren = {lat:52.090675678756696, lng:5.121281569486314};
+      const zoomLevel = 17.5;
+      let featureInfoFormat = "application/json";
+      const getFeatureInfoUrl = `${wmsUrl}service=WMS&version=1.1.1&request=GetFeatureInfo&layers=${layer}&query_layers=${layer}&`;
+      const featureinfoproxy = null;
+
+      // test with featureInfoFormat = "application/json"
+      const result_json = await queryWMSFeatures(domToren, zoomLevel, getFeatureInfoUrl, featureInfoFormat, featureinfoproxy)
+      const info_json = document.querySelector("#info_json");
+      info_json.innerHTML = JSON.stringify(result_json, null, 2);
+
+      // test with featureInfoFormat = "text/xml"
+      featureInfoFormat = 'text/xml';
+      const result_xml = await queryWMSFeatures(domToren, zoomLevel, getFeatureInfoUrl, featureInfoFormat, featureinfoproxy)
+      const info_xml = document.querySelector("#info_xml");
+      info_xml.innerHTML = JSON.stringify(result_xml, null, 2);
+
+      // test with featureInfoFormat = "text/gml"
+      featureInfoFormat = 'text/xml; subtype=gml/3.1.1';
+      const result_gml = await queryWMSFeatures(domToren, zoomLevel, getFeatureInfoUrl, featureInfoFormat, featureinfoproxy)
+      const info_gml = document.querySelector("#info_gml");
+      info_gml.innerHTML = JSON.stringify(result_gml, null, 2);
+
+      // test with featureInfoFormat = "text/plain"
+      featureInfoFormat = 'text/plain';
+      const result_plain = await queryWMSFeatures(domToren, zoomLevel, getFeatureInfoUrl, featureInfoFormat, featureinfoproxy)
+      const info_plain = document.querySelector("#info_plain");
+      info_plain.innerHTML = JSON.stringify(result_plain, null, 2);
+    }
+    window.buttonClick = buttonClick; // make buttonClick() globally available
+  </script>
+<body>
+  <button type="button" onclick="buttonClick()">GetFeatureInfo</button>
+  <div id="info_json"></div>
+  <div id="info_xml"></div>
+  <div id="info_gml"></div>
+  <div id="info_plain"></div>
+</body>
+</html>
